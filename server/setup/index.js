@@ -17,6 +17,9 @@ const fetchAndStoreFilms = require('./fetch-and-store-films');
 const speciesRepository = require('../app/species/repository')(db);
 const fetchAndStoreSpecies = require('./fetch-and-store-species');
 
+const starshipsRepository = require('../app/starships/repository')(db);
+const fetchAndStoreStarships = require('./fetch-and-store-starships');
+
 (async () => {
     await createDatabaseSchema(db);
 
@@ -29,7 +32,10 @@ const fetchAndStoreSpecies = require('./fetch-and-store-species');
     // const films = await fetchAndStoreFilms(fetch, filmsRepository);
     // console.log(films);
 
-    const species = await fetchAndStoreSpecies(fetch, speciesRepository);
-    console.log(species);
+    // const species = await fetchAndStoreSpecies(fetch, speciesRepository);
+    // console.log(species);
+
+    const starships = await fetchAndStoreStarships(fetch, starshipsRepository);
+    console.log(starships);
     
 })();

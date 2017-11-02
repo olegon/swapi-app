@@ -1,4 +1,4 @@
-module.exports = function createDatabaseSchema (db) {
+module.exports = function createDatabaseSchema(db) {
     return new Promise((res, rej) => {
         db.serialize(() => {
             db.run(
@@ -63,6 +63,27 @@ module.exports = function createDatabaseSchema (db) {
                     average_lifespan text,
                     edited text,
                     hair_colors text,
+                    created text
+                );`
+            );
+
+            db.run(
+                `create table starships (
+                    id int primary key not null,
+                    length text,
+                    MGLT text,
+                    consumables text,
+                    name text,
+                    passengers text,
+                    manufacturer text,
+                    hyperdrive_rating text,
+                    max_atmosphering_speed text,
+                    edited text,
+                    starship_class text,
+                    cost_in_credits text,
+                    model text,
+                    cargo_capacity text,
+                    crew text,
                     created text
                 );`
             );
