@@ -8,5 +8,6 @@ const makePeopleRoute = require('./people');
 const app = express();
 
 app.use('/api/v1/planets', makePlanetsRoute(db));
+app.use('/api/v1/people', makePeopleRoute(db));
 
 module.exports = app;

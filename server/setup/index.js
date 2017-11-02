@@ -16,5 +16,8 @@ const fetchAndStorePeople = require('./fetch-and-store-people');
 
     const planets = await fetchAndStorePlanets(fetch, planetRepository);
     console.log(planets);
-    
+
+    const people = await fetchAndStorePeople(fetch, peopleRepository);
+    console.log(people);
+
 })();

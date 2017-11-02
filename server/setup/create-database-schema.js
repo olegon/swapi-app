@@ -17,7 +17,24 @@ module.exports = function createDatabaseSchema (db) {
                     created text
                 );`
             );
-            
+
+            db.run(
+                `create table people (
+                    id int primary key not null,
+                    id_planet_homeworld int,
+                    edited text,
+                    skin_color text,
+                    name text,
+                    birth_year text,
+                    height text,
+                    eye_color text,
+                    gender text,
+                    created text,
+                    hair_color text,
+                    mass text
+                );`
+            );
+
             res();
         });
     });
