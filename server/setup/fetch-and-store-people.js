@@ -14,7 +14,12 @@ module.exports = async (fetch, peopleRepository) => {
             console.log(`Storing: ${person.name}`);
             
             const [ , id ] = /https:\/\/swapi\.co\/api\/people\/(\d+)/.exec(person.url);
-            const [ , id_planet_homeworld ] = /https:\/\/swapi\.co\/api\/planets\/(\d+)/.exec(person.homeworld);
+            
+            let id_planet_homeworld = null;
+            try {
+                id_planet_homeworld = /https:\/\/swapi\.co\/api\/planets\/(\d+)/.exec(specie.homeworld)[1];
+            }
+            catch (err) { }
             
             allThePeople.push(person);
             
