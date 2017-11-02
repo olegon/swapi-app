@@ -2,6 +2,23 @@ module.exports = function createDatabaseSchema (db) {
     return new Promise((res, rej) => {
         db.serialize(() => {
             db.run(
+                `create table people (
+                    id int primary key not null,
+                    id_planet_homeworld int,
+                    edited text,
+                    skin_color text,
+                    name text,
+                    birth_year text,
+                    height text,
+                    eye_color text,
+                    gender text,
+                    created text,
+                    hair_color text,
+                    mass text
+                );`
+            );
+
+            db.run(
                 `create table planets (
                     id int primary key not null,
                     surface_water text,
@@ -19,19 +36,16 @@ module.exports = function createDatabaseSchema (db) {
             );
 
             db.run(
-                `create table people (
+                `create table films (
                     id int primary key not null,
-                    id_planet_homeworld int,
+                    release_date text,
+                    director text,
+                    title text,
                     edited text,
-                    skin_color text,
-                    name text,
-                    birth_year text,
-                    height text,
-                    eye_color text,
-                    gender text,
+                    producer text,
+                    episode_id int,
                     created text,
-                    hair_color text,
-                    mass text
+                    opening_crawl text
                 );`
             );
 
