@@ -49,6 +49,24 @@ module.exports = function createDatabaseSchema (db) {
                 );`
             );
 
+            db.run(
+                `create table species (
+                    id int primary key not null,
+                    id_planet_homeworld int,
+                    language text,
+                    skin_colors text,
+                    designation text,
+                    name text,
+                    average_height text,
+                    classification text,
+                    eye_colors text,
+                    average_lifespan text,
+                    edited text,
+                    hair_colors text,
+                    created text
+                );`
+            );
+
             res();
         });
     });
