@@ -3,20 +3,24 @@ const sqlite3 = require('sqlite3').verbose();
 
 const db = new sqlite3.Database('/tmp/swapi.db');
 
-const makePlanetsRoute = require('./planets');
-const makePeopleRoute = require('./people');
-const makeFilmsRoute = require('./films');
-const makeSpeciesRoute = require('./species');
-const makeStarshipsRoute = require('./starships');
-const makeVehiclesRoute = require('./vehicles');
+const planetsRoute = require('./planets')(db);
+const peopleRoute = require('./people')(db);
+const filmsRoute = require('./films')(db);
+const speciesRoute = require('./species')(db);
+const starshipsRoute = require('./starships')(db);
+const vehiclesRoute = require('./vehicles')(db);
 
 const app = express();
 
-app.use('/api/v1/planets', makePlanetsRoute(db));
-app.use('/api/v1/people', makePeopleRoute(db));
-app.use('/api/v1/films', makeFilmsRoute(db));
-app.use('/api/v1/species', makeSpeciesRoute(db));
-app.use('/api/v1/starships', makeStarshipsRoute(db));
-app.use('/api/v1/vehicles', makeVehiclesRoute(db));
+const apiRouter = express.Router();
+
+apiRouter.use('/planets', planetsRoute);
+apiRouter.use('/people', peopleRoute);
+apiRouter.use('/films', filmsRoute);
+apiRouter.use('/species', speciesRoute);
+apiRouter.use('/starships', starshipsRoute);
+apiRouter.use('/vehicles', vehiclesRoute);
+
+app.use('/api/v1', apiRouter);
 
 module.exports = app;
