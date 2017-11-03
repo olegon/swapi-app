@@ -1,5 +1,5 @@
 module.exports = async (fetch, peopleRepository) => {
-    const allThePeople = [];
+    const rawPeople = [];
 
     let url = 'https://swapi.co/api/people';
     do {
@@ -21,7 +21,7 @@ module.exports = async (fetch, peopleRepository) => {
             }
             catch (err) { }
             
-            allThePeople.push(person);
+            rawPeople.push(person);
             
             await peopleRepository.insert({
                 id,
@@ -33,5 +33,5 @@ module.exports = async (fetch, peopleRepository) => {
         url = json.next;
     } while (url != null);
 
-    return allThePeople;
+    return rawPeople;
 }

@@ -1,5 +1,5 @@
 module.exports = async (fetch, planetRepository) => {
-    const allThePlanets = [];
+    const rawPlanets = [];
 
     let url = 'https://swapi.co/api/planets';
     do {
@@ -15,7 +15,7 @@ module.exports = async (fetch, planetRepository) => {
 
             const [ , id ] = /https:\/\/swapi\.co\/api\/planets\/(\d+)/.exec(planet.url);
 
-            allThePlanets.push(planet);
+            rawPlanets.push(planet);
             
             await planetRepository.insert({
                 id,
@@ -26,5 +26,5 @@ module.exports = async (fetch, planetRepository) => {
         url = json.next;
     } while (url != null);
 
-    return allThePlanets;
+    return rawPlanets;
 }

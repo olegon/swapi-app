@@ -1,5 +1,5 @@
 module.exports = async (fetch, vehicleRepository) => {
-    const allTheVehicles = [];
+    const rawVehicles = [];
 
     let url = 'https://swapi.co/api/vehicles';
     do {
@@ -15,7 +15,7 @@ module.exports = async (fetch, vehicleRepository) => {
 
             const [ , id ] = /https:\/\/swapi\.co\/api\/vehicles\/(\d+)/.exec(vehicle.url);
 
-            allTheVehicles.push(vehicle);
+            rawVehicles.push(vehicle);
             
             await vehicleRepository.insert({
                 id,
@@ -26,5 +26,5 @@ module.exports = async (fetch, vehicleRepository) => {
         url = json.next;
     } while (url != null);
 
-    return allTheVehicles;
+    return rawVehicles;
 }

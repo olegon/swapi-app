@@ -1,5 +1,5 @@
 module.exports = async (fetch, filmRepository) => {
-    const allTheFilms = [];
+    const rawFilms = [];
 
     let url = 'https://swapi.co/api/films';
     do {
@@ -15,7 +15,7 @@ module.exports = async (fetch, filmRepository) => {
             
             const [ , id ] = /https:\/\/swapi\.co\/api\/films\/(\d+)/.exec(film.url);
             
-            allTheFilms.push(film);
+            rawFilms.push(film);
             
             await filmRepository.insert({
                 id,
@@ -26,5 +26,5 @@ module.exports = async (fetch, filmRepository) => {
         url = json.next;
     } while (url != null);
 
-    return allTheFilms;
+    return rawFilms;
 }

@@ -1,5 +1,5 @@
 module.exports = async (fetch, starshipsRepository) => {
-    const allTheStarships = [];
+    const rawStarships = [];
 
     let url = 'https://swapi.co/api/starships';
     do {
@@ -15,7 +15,7 @@ module.exports = async (fetch, starshipsRepository) => {
 
             const [ , id ] = /https:\/\/swapi\.co\/api\/starships\/(\d+)/.exec(starship.url);
 
-            allTheStarships.push(starship);
+            rawStarships.push(starship);
             
             await starshipsRepository.insert({
                 id,
@@ -26,5 +26,5 @@ module.exports = async (fetch, starshipsRepository) => {
         url = json.next;
     } while (url != null);
 
-    return allTheStarships;
+    return rawStarships;
 }

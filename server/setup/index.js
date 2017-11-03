@@ -26,14 +26,14 @@ const fetchAndStoreVehicles = require('./fetch-and-store-vehicles');
 (async () => {
     await createDatabaseSchema(db);
     
-    const planets = await fetchAndStorePlanets(fetch, planetRepository);
+    const rawPlanets = await fetchAndStorePlanets(fetch, planetRepository);
 
     const [
-        people,
-        films,
-        species,
-        starships,
-        vehicles
+        rawPeople,
+        rawFilms,
+        rawSpecies,
+        rawStarships,
+        rawVehicles
     ] = await Promise.all([
         fetchAndStorePeople(fetch, peopleRepository),
         fetchAndStoreFilms(fetch, filmsRepository),
@@ -42,11 +42,11 @@ const fetchAndStoreVehicles = require('./fetch-and-store-vehicles');
         fetchAndStoreVehicles(fetch, vehiclesRepository)
     ]);
 
-    console.log(planets);
-    console.log(people);
-    console.log(films);
-    console.log(species);
-    console.log(starships);
-    console.log(vehicles);
+    console.log(rawPlanets);
+    console.log(rawPeople);
+    console.log(rawFilms);
+    console.log(rawSpecies);
+    console.log(rawStarships);
+    console.log(rawVehicles);
 
 })();
