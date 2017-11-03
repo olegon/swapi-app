@@ -27,10 +27,25 @@ module.exports = function (db) {
                 });
             });
         },
+        get: function (id) {
+            return new Promise((res, rej) => {
+                db.get(`
+                    select
+                        id, id_planets_homeworld, edited, skin_color, name, birth_year, height, eye_color, gender, created, hair_color, mass
+                    from people
+                    where id = ?;
+                `, [id], function (err, row) {
+                    if (err) return rej(err);
+                    
+                    res(row);
+                });
+            });
+        },
         list: function () {
             return new Promise((res, rej) => {
                 db.all(`
-                    select id, id_planets_homeworld, edited, skin_color, name, birth_year, height, eye_color, gender, created, hair_color, mass
+                    select
+                        id, name, gender
                     from people;
                 `, [], function (err, rows) {
                     if (err) return rej(err);
