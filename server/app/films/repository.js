@@ -35,6 +35,62 @@ module.exports = function (db) {
                     res(rows);
                 });
             });
+        },
+        insertVehicle: function (id_film, id_vehicle) {
+            return new Promise((res, rej) => {
+                db.run(`
+                    insert into films_vehicles (id_films, id_vehicles)
+                    values (?, ?);
+                `,
+                [ id_film, id_vehicle ],
+                function (err) {
+                    if (err) return rej(err);
+
+                    res();
+                });
+            });
+        },
+        insertStarship: function (id_film, id_starship) {
+            return new Promise((res, rej) => {
+                db.run(`
+                    insert into films_starships (id_films, id_starships)
+                    values (?, ?);
+                `,
+                [ id_film, id_starship ],
+                function (err) {
+                    if (err) return rej(err);
+
+                    res();
+                });
+            });
+        },
+        insertPlanet: function (id_film, id_planet) {
+            return new Promise((res, rej) => {
+                db.run(`
+                    insert into films_planets (id_films, id_planets)
+                    values (?, ?);
+                `,
+                [ id_film, id_planet ],
+                function (err) {
+                    if (err) return rej(err);
+
+                    res();
+                });
+            });
+        },
+        insertSpecie: function (id_film, id_specie) {
+            return new Promise((res, rej) => {
+                db.run(`
+                    insert into films_species (id_films, id_species)
+                    values (?, ?);
+                `,
+                [ id_film, id_specie ],
+                function (err) {
+                    if (err) return rej(err);
+
+                    res();
+                });
+            });
         }
     }
 };

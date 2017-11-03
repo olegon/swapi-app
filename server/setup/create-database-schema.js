@@ -138,6 +138,38 @@ module.exports = function createDatabaseSchema(db) {
                     CONSTRAINT unique_people_vehicles UNIQUE (id_people, id_vehicles)
                 );`
             );
+
+            db.run(
+                `create table films_starships (
+                    id_films integer not null,
+                    id_starships integer not null,
+                    CONSTRAINT unique_films_starships UNIQUE (id_films, id_starships)
+                );`
+            );
+
+            db.run(
+                `create table films_vehicles (
+                    id_films integer not null,
+                    id_vehicles integer not null,
+                    CONSTRAINT unique_films_vehicles UNIQUE (id_films, id_vehicles)
+                );`
+            );
+
+            db.run(
+                `create table films_planets (
+                    id_films integer not null,
+                    id_planets integer not null,
+                    CONSTRAINT unique_films_planets UNIQUE (id_films, id_planets)
+                );`
+            );
+
+            db.run(
+                `create table films_species (
+                    id_films integer not null,
+                    id_species integer not null,
+                    CONSTRAINT unique_films_species UNIQUE (id_films, id_species)
+                );`
+            );
             
             res();
         });
