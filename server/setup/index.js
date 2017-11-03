@@ -1,10 +1,17 @@
+const { SQLITE_FILEPATH } = process.env;
+
+if (SQLITE_FILEPATH == null) throw new Error('Variável de ambiente SQLITE_FILEPATH não encontrada.');
+
+const fs = require('fs');
 const sqlite3 = require('sqlite3').verbose();
 const fetch = require('node-fetch');
 const _ = require('lodash');
 
+fs.unlinkSync(SQLITE_FILEPATH);
+
 const { extractId } = require('./util');
 
-const db = new sqlite3.Database('/tmp/swapi.db');
+const db = new sqlite3.Database(SQLITE_FILEPATH);
 
 const createDatabaseSchema = require('./create-database-schema');
 
