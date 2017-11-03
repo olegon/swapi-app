@@ -88,6 +88,25 @@ module.exports = function createDatabaseSchema(db) {
                 );`
             );
 
+            db.run(
+                `create table vehicles (
+                    id int primary key not null,
+                    model text,
+                    consumables text,
+                    vehicle_class text,
+                    passengers text,
+                    edited text,
+                    crew text,
+                    length text,
+                    cargo_capacity text,
+                    manufacturer text,
+                    cost_in_credits text,
+                    max_atmosphering_speed text,
+                    created text,
+                    name text
+                );`
+            );
+
             res();
         });
     });

@@ -20,22 +20,33 @@ const fetchAndStoreSpecies = require('./fetch-and-store-species');
 const starshipsRepository = require('../app/starships/repository')(db);
 const fetchAndStoreStarships = require('./fetch-and-store-starships');
 
+const vehiclesRepository = require('../app/vehicles/repository')(db);
+const fetchAndStoreVehicles = require('./fetch-and-store-vehicles');
+
 (async () => {
     await createDatabaseSchema(db);
-
-    // const planets = await fetchAndStorePlanets(fetch, planetRepository);
-    // console.log(planets);
-
-    // const people = await fetchAndStorePeople(fetch, peopleRepository);
-    // console.log(people);
-
-    // const films = await fetchAndStoreFilms(fetch, filmsRepository);
-    // console.log(films);
-
-    // const species = await fetchAndStoreSpecies(fetch, speciesRepository);
-    // console.log(species);
-
-    const starships = await fetchAndStoreStarships(fetch, starshipsRepository);
-    console.log(starships);
     
+    const planets = await fetchAndStorePlanets(fetch, planetRepository);
+
+    const [
+        people,
+        films,
+        species,
+        starships,
+        vehicles
+    ] = await Promise.all([
+        fetchAndStorePeople(fetch, peopleRepository),
+        fetchAndStoreFilms(fetch, filmsRepository),
+        fetchAndStoreSpecies(fetch, speciesRepository),
+        fetchAndStoreStarships(fetch, starshipsRepository),
+        fetchAndStoreVehicles(fetch, vehiclesRepository)
+    ]);
+
+    console.log(planets);
+    console.log(people);
+    console.log(films);
+    console.log(species);
+    console.log(starships);
+    console.log(vehicles);
+
 })();
