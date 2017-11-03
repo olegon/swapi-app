@@ -1,7 +1,10 @@
 const sqlite3 = require('sqlite3').verbose();
 const fetch = require('node-fetch');
+const _ = require('lodash');
 
-const db = new sqlite3.Database('/tmp/swapi-db');
+const { extractId } = require('./util');
+
+const db = new sqlite3.Database('/tmp/swapi.db');
 
 const createDatabaseSchema = require('./create-database-schema');
 
@@ -25,28 +28,28 @@ const fetchAndStoreVehicles = require('./fetch-and-store-vehicles');
 
 (async () => {
     await createDatabaseSchema(db);
-    
-    const rawPlanets = await fetchAndStorePlanets(fetch, planetRepository);
 
     const [
-        rawPeople,
-        rawFilms,
-        rawSpecies,
-        rawStarships,
-        rawVehicles
+        rawPeople
+        // rawPlanets,
+        // rawFilms,
+        // rawSpecies,
+        // rawStarships,
+        // rawVehicles
     ] = await Promise.all([
-        fetchAndStorePeople(fetch, peopleRepository),
-        fetchAndStoreFilms(fetch, filmsRepository),
-        fetchAndStoreSpecies(fetch, speciesRepository),
-        fetchAndStoreStarships(fetch, starshipsRepository),
-        fetchAndStoreVehicles(fetch, vehiclesRepository)
+        fetchAndStorePeople(fetch, peopleRepository, extractId)
+        // fetchAndStorePlanets(fetch, planetRepository, extractId),
+        // fetchAndStoreFilms(fetch, filmsRepository, extractId),
+        // fetchAndStoreSpecies(fetch, speciesRepository, extractId),
+        // fetchAndStoreStarships(fetch, starshipsRepository, extractId),
+        // fetchAndStoreVehicles(fetch, vehiclesRepository, extractId)
     ]);
 
-    console.log(rawPlanets);
-    console.log(rawPeople);
-    console.log(rawFilms);
-    console.log(rawSpecies);
-    console.log(rawStarships);
-    console.log(rawVehicles);
+    // console.log(rawPlanets);
+    // console.log(rawPeople);
+    // console.log(rawFilms);
+    // console.log(rawSpecies);
+    // console.log(rawStarships);
+    // console.log(rawVehicles);
 
 })();

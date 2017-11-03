@@ -2,25 +2,8 @@ module.exports = function createDatabaseSchema(db) {
     return new Promise((res, rej) => {
         db.serialize(() => {
             db.run(
-                `create table people (
-                    id int primary key not null,
-                    id_planet_homeworld int,
-                    edited text,
-                    skin_color text,
-                    name text,
-                    birth_year text,
-                    height text,
-                    eye_color text,
-                    gender text,
-                    created text,
-                    hair_color text,
-                    mass text
-                );`
-            );
-
-            db.run(
                 `create table planets (
-                    id int primary key not null,
+                    id integer primary key not null,
                     surface_water text,
                     gravity text,
                     name text,
@@ -36,14 +19,31 @@ module.exports = function createDatabaseSchema(db) {
             );
 
             db.run(
+                `create table people (
+                    id integer primary key not null,
+                    id_planets_homeworld integer,
+                    edited text,
+                    skin_color text,
+                    name text,
+                    birth_year text,
+                    height text,
+                    eye_color text,
+                    gender text,
+                    created text,
+                    hair_color text,
+                    mass text
+                );`
+            );
+
+            db.run(
                 `create table films (
-                    id int primary key not null,
+                    id integer primary key not null,
                     release_date text,
                     director text,
                     title text,
                     edited text,
                     producer text,
-                    episode_id int,
+                    episode_id integer,
                     created text,
                     opening_crawl text
                 );`
@@ -51,8 +51,8 @@ module.exports = function createDatabaseSchema(db) {
 
             db.run(
                 `create table species (
-                    id int primary key not null,
-                    id_planet_homeworld int,
+                    id integer primary key not null,
+                    id_planets_homeworld integer,
                     language text,
                     skin_colors text,
                     designation text,
@@ -69,7 +69,7 @@ module.exports = function createDatabaseSchema(db) {
 
             db.run(
                 `create table starships (
-                    id int primary key not null,
+                    id integer primary key not null,
                     length text,
                     MGLT text,
                     consumables text,
@@ -90,7 +90,7 @@ module.exports = function createDatabaseSchema(db) {
 
             db.run(
                 `create table vehicles (
-                    id int primary key not null,
+                    id integer primary key not null,
                     model text,
                     consumables text,
                     vehicle_class text,
@@ -107,6 +107,38 @@ module.exports = function createDatabaseSchema(db) {
                 );`
             );
 
+            db.run(
+                `create table people_species (
+                    id_people integer not null,
+                    id_species integer not null,
+                    CONSTRAINT unique_people_species UNIQUE (id_people, id_species)
+                );`
+            );
+
+            db.run(
+                `create table people_films (
+                    id_people integer not null,
+                    id_films integer not null,
+                    CONSTRAINT unique_people_films UNIQUE (id_people, id_films)
+                );`
+            );
+
+            db.run(
+                `create table people_starships (
+                    id_people integer not null,
+                    id_starships integer not null,
+                    CONSTRAINT unique_people_starships UNIQUE (id_people, id_starships)
+                );`
+            );
+
+            db.run(
+                `create table people_vehicles (
+                    id_people integer not null,
+                    id_vehicles integer not null,
+                    CONSTRAINT unique_people_vehicles UNIQUE (id_people, id_vehicles)
+                );`
+            );
+            
             res();
         });
     });

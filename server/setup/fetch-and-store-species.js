@@ -1,4 +1,4 @@
-module.exports = async (fetch, speciesRepository) => {
+module.exports = async (fetch, speciesRepository, extractId) => {
     const rawSpecies = [];
 
     let url = 'https://swapi.co/api/species';
@@ -10,14 +10,14 @@ module.exports = async (fetch, speciesRepository) => {
         
         const species = json.results;
 
-        await species.forEach(async (specie) => {
-            console.log(`Storing: ${specie.name}`);
+        for (let specie of species) {
+            console.log(`Storing specie: ${specie.name}`);
 
-            const [ , id ] = /https:\/\/swapi\.co\/api\/species\/(\d+)/.exec(specie.url);
+            const id = extractId(specie.url);
             
-            let id_planet_homeworld = null;
+            let id_planets_homeworld = null;
             try {
-                id_planet_homeworld = /https:\/\/swapi\.co\/api\/planets\/(\d+)/.exec(specie.homeworld)[1];
+                id_planets_homeworld = extractId(specie.homeworld);
             }
             catch (err) { }
 
@@ -25,10 +25,10 @@ module.exports = async (fetch, speciesRepository) => {
 
             await speciesRepository.insert({
                 id,
-                id_planet_homeworld,
+                id_planets_homeworld,
                 ...specie
             });
-        });
+        };
         
         url = json.next;
     } while (url != null);

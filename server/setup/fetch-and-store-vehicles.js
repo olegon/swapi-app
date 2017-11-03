@@ -1,4 +1,4 @@
-module.exports = async (fetch, vehicleRepository) => {
+module.exports = async (fetch, vehicleRepository, extractId) => {
     const rawVehicles = [];
 
     let url = 'https://swapi.co/api/vehicles';
@@ -10,10 +10,10 @@ module.exports = async (fetch, vehicleRepository) => {
         
         const vehicles = json.results;
 
-        await vehicles.forEach(async (vehicle) => {
-            console.log(`Storing: ${vehicle.name}`);
+        for (let vehicle of vehicles) {
+            console.log(`Storing vehicle: ${vehicle.name}`);
 
-            const [ , id ] = /https:\/\/swapi\.co\/api\/vehicles\/(\d+)/.exec(vehicle.url);
+            const id = extractId(vehicle.url);
 
             rawVehicles.push(vehicle);
             
@@ -21,7 +21,7 @@ module.exports = async (fetch, vehicleRepository) => {
                 id,
                 ...vehicle
             });
-        });
+        }
 
         url = json.next;
     } while (url != null);

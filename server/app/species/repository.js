@@ -2,7 +2,7 @@ module.exports = function (db) {
     return {
         insert: function ({
             id,
-            id_planet_homeworld = null,
+            id_planets_homeworld = null,
             language = null,
             skin_colors = null,
             designation = null,
@@ -17,10 +17,10 @@ module.exports = function (db) {
         }) {
             return new Promise((res, rej) => {
                 db.run(`
-                    insert into species (id, id_planet_homeworld, language, skin_colors, designation, name, average_height, classification, eye_colors, average_lifespan, edited, hair_colors, created)
+                    insert into species (id, id_planets_homeworld, language, skin_colors, designation, name, average_height, classification, eye_colors, average_lifespan, edited, hair_colors, created)
                     values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                 `,
-                [id, id_planet_homeworld, language, skin_colors, designation, name, average_height, classification, eye_colors, average_lifespan, edited, hair_colors, created],
+                [id, id_planets_homeworld, language, skin_colors, designation, name, average_height, classification, eye_colors, average_lifespan, edited, hair_colors, created],
                 function (err) {
                     if (err) return rej(err);
                     
@@ -31,7 +31,7 @@ module.exports = function (db) {
         list: function () {
             return new Promise((res, rej) => {
                 db.all(`
-                    select id, id_planet_homeworld, language, skin_colors, designation, name, average_height, classification, eye_colors, average_lifespan, edited, hair_colors, created
+                    select id, id_planets_homeworld, language, skin_colors, designation, name, average_height, classification, eye_colors, average_lifespan, edited, hair_colors, created
                     from species;
                 `, [], function (err, rows) {
                     if (err) return rej(err);

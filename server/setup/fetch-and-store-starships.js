@@ -1,4 +1,4 @@
-module.exports = async (fetch, starshipsRepository) => {
+module.exports = async (fetch, starshipsRepository, extractId) => {
     const rawStarships = [];
 
     let url = 'https://swapi.co/api/starships';
@@ -10,10 +10,10 @@ module.exports = async (fetch, starshipsRepository) => {
         
         const starships = json.results;
 
-        await starships.forEach(async (starship) => {
-            console.log(`Storing: ${starship.name}`);
+        for (let starship of starships) {
+            console.log(`Storing starship: ${starship.name}`);
 
-            const [ , id ] = /https:\/\/swapi\.co\/api\/starships\/(\d+)/.exec(starship.url);
+            const id = extractId(starship.url);
 
             rawStarships.push(starship);
             
@@ -21,7 +21,7 @@ module.exports = async (fetch, starshipsRepository) => {
                 id,
                 ...starship
             });
-        });
+        }
 
         url = json.next;
     } while (url != null);

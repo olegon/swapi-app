@@ -1,4 +1,4 @@
-module.exports = async (fetch, filmRepository) => {
+module.exports = async (fetch, filmRepository, extractId) => {
     const rawFilms = [];
 
     let url = 'https://swapi.co/api/films';
@@ -10,10 +10,10 @@ module.exports = async (fetch, filmRepository) => {
         
         const films = json.results;
 
-        await films.forEach(async (film) => {
-            console.log(`Storing: ${film.title}`);
+        for (let film of films) {
+            console.log(`Storing film: ${film.title}`);
             
-            const [ , id ] = /https:\/\/swapi\.co\/api\/films\/(\d+)/.exec(film.url);
+            const id = extractId(film.url);
             
             rawFilms.push(film);
             
@@ -21,7 +21,7 @@ module.exports = async (fetch, filmRepository) => {
                 id,
                 ...film
             });
-        });
+        }
 
         url = json.next;
     } while (url != null);

@@ -1,4 +1,4 @@
-module.exports = async (fetch, planetRepository) => {
+module.exports = async (fetch, planetRepository, extractId)=> {
     const rawPlanets = [];
 
     let url = 'https://swapi.co/api/planets';
@@ -10,10 +10,10 @@ module.exports = async (fetch, planetRepository) => {
         
         const planets = json.results;
 
-        await planets.forEach(async (planet) => {
-            console.log(`Storing: ${planet.name}`);
+        for (let planet of planets) {
+            console.log(`Storing planet: ${planet.name}`);
 
-            const [ , id ] = /https:\/\/swapi\.co\/api\/planets\/(\d+)/.exec(planet.url);
+            const id = extractId(planet.url);
 
             rawPlanets.push(planet);
             
@@ -21,7 +21,7 @@ module.exports = async (fetch, planetRepository) => {
                 id,
                 ...planet
             });
-        });
+        }
 
         url = json.next;
     } while (url != null);
