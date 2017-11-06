@@ -14,6 +14,12 @@ const app = express();
 
 const apiRouter = express.Router();
 
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    
+    next();
+});
+
 apiRouter.use('/planets', planetsRoute);
 apiRouter.use('/people', peopleRoute);
 apiRouter.use('/films', filmsRoute);
