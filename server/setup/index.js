@@ -7,7 +7,12 @@ const sqlite3 = require('sqlite3').verbose();
 const fetch = require('node-fetch');
 const _ = require('lodash');
 
-fs.unlinkSync(SQLITE_FILEPATH);
+try {
+	fs.unlinkSync(SQLITE_FILEPATH);
+}
+catch (e) {
+	console.error(e);
+}
 
 const { extractId } = require('./util');
 
